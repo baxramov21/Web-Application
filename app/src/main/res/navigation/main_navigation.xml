@@ -8,30 +8,38 @@
         android:id="@+id/loginActivity"
         android:name="com.example.webapplication.LoginActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" >
-        <action
-            android:id="@+id/action_main_activity_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_main_activity_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
-    </activity>
+        tools:layout="@layout/activity_login" />
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.webapplication.RegistrationFragment"
+        android:name="com.example.webapplication.RegisterFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
+        tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.webapplication.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.webapplication.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
     </fragment>
 </navigation>
