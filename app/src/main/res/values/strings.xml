@@ -9,4 +9,10 @@
     <string name="login">Login</string>
     <string name="tv_sign_up">Have not registered yet ?  Sign Up</string>
     <string name="dont_have_account">"Don't have account yet ? Sign Up "</string>
+    <string name="sign_out">Sign out</string>
+    <string name="succes_in_register">You Successfully signed up</string>
+    <string name="succes">Success !</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="error">Error !</string>
+    <string name="password_or_email_is_empty">Password or email is empty</string>
 </resources>

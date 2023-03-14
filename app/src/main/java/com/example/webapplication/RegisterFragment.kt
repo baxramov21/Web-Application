@@ -2,15 +2,19 @@ package com.example.webapplication
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.webapplication.databinding.FragmentRegistrationBinding
 import com.google.firebase.auth.FirebaseAuth
+
 
 class RegisterFragment : Fragment() {
 
@@ -35,9 +39,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 //        initNavigation()
-
         binding.progressBar.visibility = ProgressBar.INVISIBLE
         binding.buttonSignUp.setOnClickListener {
             with(binding) {
@@ -50,8 +52,8 @@ class RegisterFragment : Fragment() {
                     progressBar.visibility = ProgressBar.VISIBLE
                     registrateUser(email, password)
                 } else {
-                    tilEmail.error = "Password or email is empty"
-                    tilPassword.error = "Password or email is empty"
+                    tilEmail.error = getString(R.string.password_or_email_is_empty)
+                    tilPassword.error = getString(R.string.password_or_email_is_empty)
                 }
             }
         }
@@ -65,19 +67,20 @@ class RegisterFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "createUserWithEmail:success")
-                val user = auth.currentUser
+                showToast(SweetAlertDialog.SUCCESS_TYPE)
                 openMainScreen()
             } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(
-                    requireContext(), "Authentication failed.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast(SweetAlertDialog.ERROR_TYPE)
                 openMainScreen()
             }
         }
+    }
+
+    private fun showToast(message_type: Int) {
+        SweetAlertDialog(context, message_type)
+            .setTitleText(getString(R.string.error))
+            .setContentText(getString(R.string.auth_failed))
+            .show()
     }
 
     private fun openMainScreen() {
@@ -86,11 +89,11 @@ class RegisterFragment : Fragment() {
     }
 
     private fun openLoginPage() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.login_container, LoginFragment.newInstance())
-            .commit()
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.login_container, LoginFragment.newInstance())
+//            .commit()
+        findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
     }
-
 
 //    private fun initNavigation() {
 //        navHostFragment = requireActivity()
