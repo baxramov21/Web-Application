@@ -6,11 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.webapplication.databinding.FragmentRegistrationBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -67,32 +63,35 @@ class RegisterFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
-                showToast(SweetAlertDialog.SUCCESS_TYPE)
                 openMainScreen()
             } else {
-                showToast(SweetAlertDialog.ERROR_TYPE)
-                openMainScreen()
+                showToast(
+                    SweetAlertDialog.ERROR_TYPE,
+                    getString(R.string.error),
+                    getString(R.string.auth_failed)
+                )
             }
         }
     }
 
-    private fun showToast(message_type: Int) {
+    private fun showToast(message_type: Int, title: String, message: String) {
         SweetAlertDialog(context, message_type)
-            .setTitleText(getString(R.string.error))
-            .setContentText(getString(R.string.auth_failed))
+            .setTitleText(title)
+            .setContentText(message)
             .show()
     }
 
     private fun openMainScreen() {
         val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra("registered", true)
         startActivity(intent)
     }
 
     private fun openLoginPage() {
-//        requireActivity().supportFragmentManager.beginTransaction()
-//            .replace(R.id.login_container, LoginFragment.newInstance())
-//            .commit()
-        findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.login_container, LoginFragment.newInstance())
+            .commit()
+        //    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
     }
 
 //    private fun initNavigation() {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Web Application</string>
+    <string name="app_name">Universe</string>
     <string name="sign_up">Sign up</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -15,4 +15,5 @@
     <string name="auth_failed">Authentication failed</string>
     <string name="error">Error !</string>
     <string name="password_or_email_is_empty">Password or email is empty</string>
+    <string name="succes_in_login">Succesfully logged in</string>
 </resources>

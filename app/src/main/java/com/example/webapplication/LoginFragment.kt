@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.webapplication.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -65,19 +66,24 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
                     openMainScreen()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        requireContext(), "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    openMainScreen()
+                    binding.loginProgressBar.visibility = ProgressBar.INVISIBLE
+                    showToast(
+                        SweetAlertDialog.ERROR_TYPE,
+                        getString(R.string.error),
+                        getString(R.string.auth_failed)
+                    )
                 }
             }
+    }
+
+    private fun showToast(message_type: Int, title: String, message: String) {
+        SweetAlertDialog(context, message_type)
+            .setTitleText(title)
+            .setContentText(message)
+            .show()
     }
 
     private fun openRegistrationPage() {
@@ -88,6 +94,7 @@ class LoginFragment : Fragment() {
 
     private fun openMainScreen() {
         val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra("login", true)
         startActivity(intent)
     }
 
