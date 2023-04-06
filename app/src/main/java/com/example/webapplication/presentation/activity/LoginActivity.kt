@@ -1,10 +1,12 @@
-package com.example.webapplication
+package com.example.webapplication.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.webapplication.R
 import com.example.webapplication.databinding.ActivityLoginBinding
+import com.example.webapplication.presentation.fragment.RegisterFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {

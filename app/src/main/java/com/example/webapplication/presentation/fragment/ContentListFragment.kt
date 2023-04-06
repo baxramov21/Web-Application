@@ -1,4 +1,4 @@
-package com.example.webapplication
+package com.example.webapplication.presentation.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.webapplication.databinding.FragmentContentListBinding
+import com.example.webapplication.domain.WebItemEntity
+import com.example.webapplication.presentation.activity.WebActivity
+import com.example.webapplication.presentation.adapter.WebAdapter
+import com.example.webapplication.presentation.view_model.MainViewModel
+import com.example.webapplication.presentation.view_model.ViewModelFactory
 
 class ContentListFragment : Fragment() {
 
@@ -16,7 +22,15 @@ class ContentListFragment : Fragment() {
     private val binding: FragmentContentListBinding
         get() = _binding ?: throw java.lang.RuntimeException("FragmentContentListBinding is null")
 
-    val list = ArrayList<WebItem>()
+    private val viewModelFactory by lazy {
+        ViewModelFactory(requireActivity().application)
+    }
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+    }
+
+    val list = ArrayList<WebItemEntity>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +42,8 @@ class ContentListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initList()
         val adapter = WebAdapter()
+        initList()
         adapter.submitList(list)
         binding.recyclerViewWebItemsList.layoutManager =
             GridLayoutManager(context, getWindowWidth())
@@ -45,17 +59,11 @@ class ContentListFragment : Fragment() {
     }
 
     private fun initList() {
-        list.add(WebItem("Binance", "https://www.binance.com", R.drawable.binance))
-        list.add(WebItem("Netflix", "https://www.netflix.com", R.drawable.netflix))
-        list.add(WebItem("Tweeter", "https://twitter.com", R.drawable.twitter))
-        list.add(WebItem("Spotify", "https://open.spotify.com", R.drawable.spotify))
-        list.add(WebItem("YouTube", "https://www.binance.com", R.drawable.youtube))
-        list.add(WebItem("Pinterest", "https://www.pinterest.com", R.drawable.pinterest))
-        list.add(WebItem("Instagram", "https://www.instagram.com", R.drawable.insta))
-        list.add(WebItem("RoboForex", "https://roboforex.com", R.drawable.roboforex))
-        list.add(WebItem("PocketOption", "https://pocketoption.com", R.drawable.pocketoption))
-        list.add(WebItem("StackOverflow", "https://stackoverflow.com", R.drawable.stackoverflow))
-        list.add(WebItem("Facebook", "https://www.facebook.com", R.drawable.facebook))
+        viewModel.itemsList.observe(viewLifecycleOwner) {
+            it?.let {
+                list.addAll(it)
+            }
+        }
     }
 
     private fun getWindowWidth(): Int {

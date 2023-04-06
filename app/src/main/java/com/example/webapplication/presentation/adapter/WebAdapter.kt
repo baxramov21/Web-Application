@@ -1,17 +1,17 @@
-package com.example.webapplication
+package com.example.webapplication.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.webapplication.R
+import com.example.webapplication.domain.WebItemEntity
 
-class WebAdapter : ListAdapter<WebItem, WebAdapter.MyViewHolder>(ShopItemDiffCallback()) {
+class WebAdapter : ListAdapter<WebItemEntity, WebAdapter.MyViewHolder>(ShopItemDiffCallback()) {
 
     private lateinit var context: Context
 

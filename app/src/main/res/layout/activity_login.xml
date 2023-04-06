@@ -9,4 +9,4 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toBottomOf="parent"
-    tools:context=".LoginActivity" />
+    tools:context=".presentation.activity.LoginActivity" />

@@ -1,16 +1,16 @@
-package com.example.webapplication
+package com.example.webapplication.presentation.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.webapplication.R
 import com.example.webapplication.databinding.FragmentLoginBinding
+import com.example.webapplication.presentation.activity.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {

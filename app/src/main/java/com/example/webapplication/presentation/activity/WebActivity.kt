@@ -1,10 +1,8 @@
-package com.example.webapplication
+package com.example.webapplication.presentation.activity
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.webkit.*
@@ -35,10 +33,11 @@ class WebActivity : AppCompatActivity() {
         url = intentFromMa.getStringExtra("URL").toString()
 
         webView.isClickable = true
-
-        webView.loadUrl(url)
         val webSettings = webView.settings
         webSettings.javaScriptEnabled = true
+
+        webView.loadUrl(url)
+
         webView.webViewClient = object : WebViewClient() {
             override fun onReceivedError(
                 webView: WebView,
@@ -49,9 +48,6 @@ class WebActivity : AppCompatActivity() {
 
                 val intent = Intent(this@WebActivity, MainActivity::class.java)
                 startActivity(intent)
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.container, GameFragment())
-//                    .commit()
             }
 
             // load url

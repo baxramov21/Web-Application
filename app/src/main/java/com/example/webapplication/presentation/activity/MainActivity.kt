@@ -1,4 +1,4 @@
-package com.example.webapplication
+package com.example.webapplication.presentation.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ProgressBar
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.webapplication.R
 import com.example.webapplication.databinding.ActivityMainBinding
+import com.example.webapplication.presentation.fragment.ContentListFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
