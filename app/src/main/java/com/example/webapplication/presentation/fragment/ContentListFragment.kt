@@ -3,6 +3,7 @@ package com.example.webapplication.presentation.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,8 @@ class ContentListFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
     }
 
-    val list = ArrayList<WebItemEntity>()
+    private val list = ArrayList<WebItemEntity>()
+    private val adapter = WebAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,11 +44,10 @@ class ContentListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = WebAdapter()
-        initList()
-        adapter.submitList(list)
         binding.recyclerViewWebItemsList.layoutManager =
             GridLayoutManager(context, getWindowWidth())
+
+        onListChanged()
         binding.recyclerViewWebItemsList.adapter = adapter
         adapter.setOnItemClickListener(object : WebAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
@@ -58,9 +59,11 @@ class ContentListFragment : Fragment() {
         })
     }
 
-    private fun initList() {
+    private fun onListChanged() {
         viewModel.itemsList.observe(viewLifecycleOwner) {
             it?.let {
+                Log.d("list_of_items_by_nazar",it.toString())
+                adapter.submitList(it)
                 list.addAll(it)
             }
         }

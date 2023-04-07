@@ -11,7 +11,7 @@ import androidx.room.Update
 interface MainDao {
 
     @Query("SELECT * FROM universe_items_table")
-    suspend fun getUniverseItems(): LiveData<List<WebItemDbModel>>
+    fun getUniverseItems(): LiveData<List<WebItemDbModel>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

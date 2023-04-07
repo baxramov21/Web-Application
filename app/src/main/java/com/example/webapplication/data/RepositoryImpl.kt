@@ -14,7 +14,7 @@ class RepositoryImpl(application: Application) : Repository {
     private val mapper = Mapper()
 
 
-    override suspend fun getItems(): LiveData<List<WebItemEntity>> =
+    override fun getItems(): LiveData<List<WebItemEntity>> =
         MediatorLiveData<List<WebItemEntity>>().apply {
             addSource(database.getUniverseItems()) {
                 value = mapper.dbModelListToEntityList(it)

@@ -20,25 +20,18 @@ class MainViewModel(private val application: Application) : ViewModel() {
     private val EditWebItemUseCase = EditWebItemUseCase(repository)
     private val AddItemsListUseCase = AddItemsListUseCase(repository)
 
-    private val _itemsList = MutableLiveData<List<WebItemEntity>>()
-    val itemsList: LiveData<List<WebItemEntity>>
-        get() = _itemsList
-
-    private val list = ArrayList<WebItemEntity>()
+    val itemsList = GetItemsListUseCase.getItemsList()
 
     init {
-        if (_itemsList.value != null) {
+        if (itemsList.value == null) {
             viewModelScope.launch {
-                _itemsList.value = GetItemsListUseCase.getItemsList().value
-            }
-        } else {
-            viewModelScope.launch {
-                AddItemsListUseCase.addItemsList(list)
+                AddItemsListUseCase.addItemsList(initList())
             }
         }
     }
 
-    private fun initList() {
+    private fun initList():  ArrayList<WebItemEntity> {
+        val list = ArrayList<WebItemEntity>()
         list.add(
             WebItemEntity("Tweeter", "https://twitter.com", R.drawable.twitter)
         )
@@ -82,6 +75,7 @@ class MainViewModel(private val application: Application) : ViewModel() {
         list.add(
             WebItemEntity("PocketOption", "https://pocketoption.com", R.drawable.pocketoption)
         )
+        return list
     }
 
     fun addNewItem(item: WebItemEntity) {
