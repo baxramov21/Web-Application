@@ -1,5 +1,5 @@
 # Web-Application
-App can help users open any web site as an mobile appliaction
+App can help users open any web site as a mobile appliaction
 
 Registration
 ![registration](https://user-images.githubusercontent.com/96684932/233241301-c91a3d5c-f44a-4e33-8d8d-59e568197ea7.png)
